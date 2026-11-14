@@ -1,0 +1,41 @@
+-- Place InfiniteYieldUI in ReplicatedStorage as a ModuleScript.
+-- Place this file in StarterPlayerScripts as a LocalScript.
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UI = loadstring(game:HttpGet("https://raw.githubusercontent.com/LAUGHBLAHH/Infinite-Yield-Ui-Library/refs/heads/main/Main"))()
+
+local window = UI:CreateWindow({
+	Title = "My UI", Prefix = ";", KeepOpen = false,
+	ToggleKey = Enum.KeyCode.RightShift,
+})
+
+window:AddCommand({
+	Name = "hello [args1] [arg2]", Aliases = { "hi" },
+	Description = "显示一条通知。点击条目填入命令，按 Enter 执行。",
+	Callback = function(args, currentWindow)
+		local first = args[1] ~= "" and args[1] or "未填写"
+		local second = args[2] ~= "" and args[2] or "未填写"
+		currentWindow:Notify({ Title = "Hello", Text = "参数1：" .. first .. "\n参数2：" .. second, Duration = 5 })
+	end,
+})
+
+local custom = window:AddPage("Custom")
+custom:AddLabel("自定义设置")
+custom:AddToggle({ Text = "示例开关", Default = false, Callback = function(enabled)
+	print("Enabled:", enabled)
+end })
+custom:AddTextbox({ Text = "示例输入框", Placeholder = "输入内容", Callback = function(value)
+	print("Value:", value)
+end })
+custom:AddButton({ Text = "切换浅色主题", Callback = function()
+	window:SetTheme({
+		Shade1 = Color3.fromRGB(235, 235, 235), Shade2 = Color3.fromRGB(215, 215, 215),
+		Shade3 = Color3.fromRGB(185, 185, 185), Text1 = Color3.fromRGB(30, 30, 30),
+	})
+end })
+custom:AddButton({ Text = "返回命令列表", Callback = function() window:ShowPage("Commands") end })
+window.Pages.Settings:AddButton({ Text = "自定义页面", Callback = function() window:ShowPage("Custom") end })
+window:Notify("加载完成", "按 ; 聚焦命令栏；RightShift 显示/隐藏。", 5)
+
+-- window:SetScale(1.2)
+-- window:SetMinimized(true)
+-- window:Destroy() -- Disconnects all library-managed event connections.
