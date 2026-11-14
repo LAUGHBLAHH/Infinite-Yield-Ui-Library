@@ -314,4 +314,8 @@ node test.cjs
 
 ## 来源
 
-原始项目：<https://
+原始项目：<https://github.com/EdgeIY/infiniteyield>
+
+原始源码：<https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source>
+
+原作者版权及 MIT 许可见 `LICENSE`。本目录中的 UI 库为提取/重构版本，不加载原项目脚本。
